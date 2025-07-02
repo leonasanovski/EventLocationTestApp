@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Event Booking Page - Welcome and Choose an Event</title>
+    <style type="text/css">
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        h1, h2 {
+            color: #4CAF50;
+        }
+
+        main {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .button-primary {
+            background-color: #2196F3;
+            color: white;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-right: 5px;
+        }
+
+        .button-primary:hover {
+            background-color: #1976D2;
+        }
+
+        .button-danger {
+            background-color: #f44336;
+            color: white;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .button-danger:hover {
+            background-color: #d32f2f;
+        }
+
+        .button-add {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .button-add:hover {
+            background-color: #45a049;
+        }
+
+        input[type="number"],
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+            margin-top: 10px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 15px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .active-sessions {
+            margin-top: 30px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Welcome to our Event Booking App</h1>
+</header>
+<main>
+    <form th:action="@{/events/filter_events}" th:method="POST" class="search-form">
+        <h2>Search event</h2>
+        <div class="form-group">
+            <label for="txt">Text</label>
+            <input type="text" id="txt" name="txt" placeholder="Enter event text">
+        </div>
+        <div class="form-group">
+            <label for="rating">Rating</label>
+            <input type="number" id="rating" name="rating" placeholder="Enter rating">
+        </div>
+        <input type="submit" value="Search" class="button-primary">
+    </form>
+    <h2>Choose an event:</h2>
+
+    <form th:action="@{/events/book_event}" th:method="POST">
+        <table>
+            <thead>
+            <tr>
+                <th>Select</th>
+                <th>Event Name</th>
+                <th>Description</th>
+                <th>Rating</th>
+                <th>Location</th>
+                <th>Delete</th>
+                <th>Edit</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="event : ${event_list}">
+                <td>
+                    <input th:type="radio" th:value="${event.name}" name="selectedEvent">
+                </td>
+                <td th:text="${event.name}">Event Name</td>
+                <td th:text="${event.description}">Description</td>
+                <td th:text="${event.popularityScore}">Rating</td>
+                <td th:text="${event.location != null ? event.location.name : 'No location added'}">Location</td>
+                <td>
+                    <th:block sec:authorize="hasRole('ADMIN')">
+                        <a th:href="@{/events/delete/{id}(id=${event.getId()})}" class="btn btn-sm btn-danger" role="button">
+                            Delete
+                        </a>
+                    </th:block>
+                </td>
+
+                <td class="action-buttons">
+                    <th:block sec:authorize="hasRole('ADMIN')">
+                        <a th:href="@{/events/edit/{id} (id=${event.getId()})}" class="btn btn-sm btn-info">
+                            Edit
+                        </a>
+                    </th:block>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <th:block sec:authorize="hasRole('ADMIN')">
+            <div>
+                <a th:href="@{/events/add-form}" class="button-add">Add New Event</a>
+            </div>
+        </th:block>
+        <h2>Choose number of tickets:</h2>
+        <input type="number" name="numTickets" min="1" max="10" placeholder="Enter number of tickets"><br/>
+
+        <h2>User Name: </h2>
+        <input type="text" name="username" placeholder="Enter your name"><br/>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <div>
+        <a class="btn btn-light btn-sm ml-3" href="/logout">
+            <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </a>
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>Event Booking Page - Welcome and Choose an Event</title>
+  <style type="text/css">
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      width: 800px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    h1, h2 {
+      color: #4CAF50;
+    }
+
+    main {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .button-primary {
+      background-color: #2196F3;
+      color: white;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9em;
+      margin-right: 5px;
+    }
+
+    .button-primary:hover {
+      background-color: #1976D2;
+    }
+
+    .button-danger {
+      background-color: #f44336;
+      color: white;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9em;
+    }
+
+    .button-danger:hover {
+      background-color: #d32f2f;
+    }
+
+    .button-add {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1em;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    .button-add:hover {
+      background-color: #45a049;
+    }
+
+    input[type="number"],
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+      margin-top: 10px;
+    }
+
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1em;
+      margin-top: 15px;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    .active-sessions {
+      margin-top: 30px;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Here is a list of all Locations</h1>
+</header>
+<main>
+    <table>
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Capacity</th>
+        <th>Delete</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="location : ${location_list}">
+        <td th:text="${location.name}">Event Name</td>
+        <td th:text="${location.description}">Description</td>
+        <td th:text="${location.capacity}">Rating</td>
+        <td>
+
+          <a th:href="@{/locations/delete/{id}(id=${location.getId()})}" class="btn btn-sm btn-danger" role="button">
+            Delete
+          </a>
+
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+  <div>
+    <a th:href="@{/locations/add-loc}" class="button-add">Add New Location</a>
+  </div>
+
+
+</main>
+</body>
+</html>
