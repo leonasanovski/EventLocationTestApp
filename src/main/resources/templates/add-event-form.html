@@ -78,6 +78,21 @@
   <input type="number" id="popularityScore" name="popularityScore" placeholder="Enter popularity score"
          th:value="${event != null ? event.getPopularityScore() : ''}" step="0.1" min="0" required>
 
+  <label for="basePrice">Base Ticket Price:</label>
+  <input type="number" id="basePrice" name="basePrice" step="0.01" min="0"
+         th:value="${event != null ? event.getBasePrice() : ''}" required>
+
+  <label for="maxTickets">Maximum Tickets:</label>
+  <input type="number" id="maxTickets" name="maxTickets" min="1"
+         th:value="${event != null ? event.getMaxTickets() : ''}" required>
+
+  <label for="startTime">Start Time:</label>
+  <input type="datetime-local" id="startTime" name="startTime" required
+         th:value="${event != null ? event.getStartTime() : ''}"/>
+
+  <label for="endTime">End Time:</label>
+  <input type="datetime-local" id="endTime" name="endTime" required
+         th:value="${event != null ? event.getEndTime() : ''}"/>
   <label for="location">Location:</label>
   <select id="location" name="locationId" required>
     <option th:if="${event} != null"

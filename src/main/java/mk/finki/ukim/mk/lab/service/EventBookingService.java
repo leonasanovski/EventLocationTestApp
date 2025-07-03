@@ -3,5 +3,5 @@ package mk.finki.ukim.mk.lab.service;
 import mk.finki.ukim.mk.lab.model.EventBooking;
 
 public interface EventBookingService {
-    EventBooking placeBooking(String eventName, String attendeeName, String attendeeAddress, int numberOfTickets);
-}
+    EventBooking bookEvent(String attendeeName, String attendeeAddress, Long eventId, Long numTickets);
+    void saveBooking(EventBooking booking);}

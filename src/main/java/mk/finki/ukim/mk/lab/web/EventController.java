@@ -5,27 +5,45 @@ import mk.finki.ukim.mk.lab.model.Event;
 import mk.finki.ukim.mk.lab.model.Location;
 import mk.finki.ukim.mk.lab.service.EventService;
 import mk.finki.ukim.mk.lab.service.LocationService;
+import mk.finki.ukim.mk.lab.service.LoginService;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+
 @Controller
 @RequestMapping("/events")
 public class EventController {
     private final EventService eventService;
     private final LocationService locationService;
+    private  final LoginService loginService;
 
-    public EventController(EventService eventService, LocationService locationService) {
+    public EventController(EventService eventService, LocationService locationService, LoginService loginService) {
         this.eventService = eventService;
         this.locationService = locationService;
+        this.loginService = loginService;
     }
 
     @GetMapping()
-    public String getEventsPage(@RequestParam(required = false) String error, Model model){
+    public String getEventsPage(@RequestParam(required = false) String error, Model model,HttpSession session) {
         List<Event> eventList = this.eventService.listAll();
+        Map<Long, Integer> ticketsLeft = eventService.getRemainingTicketsForAllEvents();
+        Map<Long, Double> eventPrices = eventService.getDynamicPricesForAllEvents();
+
+        if (session.getAttribute("loginProcessed") == null) {
+            String username = SecurityContextHolder.getContext().getAuthentication().getName();
+            loginService.processLogin(username, session);
+            session.setAttribute("loginProcessed", true);
+        }
+
         model.addAttribute("event_list", eventList);
+        model.addAttribute("bookedTickets", ticketsLeft);
+        model.addAttribute("eventPrices", eventPrices);
         return "listEvents";
     }
     @PostMapping("/filter_events")
@@ -44,6 +62,12 @@ public class EventController {
         }else{
             model.addAttribute("event_list", this.eventService.listAll());
         }
+
+        Map<Long, Integer> ticketsLeft = eventService.getRemainingTicketsForAllEvents();
+        model.addAttribute("bookedTickets", ticketsLeft);
+        Map<Long, Double> eventPrices = eventService.getDynamicPricesForAllEvents();
+        model.addAttribute("eventPrices", eventPrices);
+
         return "listEvents";
 
     }
@@ -65,8 +89,13 @@ public class EventController {
                             @RequestParam String name,
                             @RequestParam String description,
                             @RequestParam Double popularityScore,
-                            @RequestParam Long locationId) {
-        eventService.save_event(id, name, description, popularityScore, locationId);
+                            @RequestParam Long locationId,
+                            @RequestParam LocalDateTime startTime,
+                            @RequestParam LocalDateTime endTime,
+                            @RequestParam double basePrice,
+                            @RequestParam int maxTickets) {
+
+        eventService.save_event(id, name, description, popularityScore, locationId,startTime,endTime,basePrice,maxTickets);
         return "redirect:/events"; // Redirect to the events list
     }
 

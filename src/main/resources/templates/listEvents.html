@@ -127,6 +127,9 @@
     <h1>Welcome to our Event Booking App</h1>
 </header>
 <main>
+    <p th:if="${session.loyaltyMessage}" style="font-weight: bold; color: #4CAF50;">
+        💬 <span th:text="${session.loyaltyMessage}">Welcome message</span>
+    </p>
     <form th:action="@{/events/filter_events}" th:method="POST" class="search-form">
         <h2>Search event</h2>
         <div class="form-group">
@@ -139,9 +142,21 @@
         </div>
         <input type="submit" value="Search" class="button-primary">
     </form>
+    <div style="text-align: right; margin-bottom: 20px;">
+        <a href="/eventBooking/cart/view" class="btn btn-primary" style="
+      background-color: #2196F3;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: bold;
+  ">
+            🛒 View Cart
+        </a>
+    </div>
     <h2>Choose an event:</h2>
 
-    <form th:action="@{/events/book_event}" th:method="POST">
+    <form th:action="@{/eventBooking/cart/add}" th:method="POST">
         <table>
             <thead>
             <tr>
@@ -150,6 +165,8 @@
                 <th>Description</th>
                 <th>Rating</th>
                 <th>Location</th>
+                <th>Tickets Left</th>
+                <th>Current Price</th>
                 <th>Delete</th>
                 <th>Edit</th>
             </tr>
@@ -163,6 +180,8 @@
                 <td th:text="${event.description}">Description</td>
                 <td th:text="${event.popularityScore}">Rating</td>
                 <td th:text="${event.location != null ? event.location.name : 'No location added'}">Location</td>
+                <td th:text="${bookedTickets[event.id]}">Tickets Left</td>
+                <td th:text="${eventPrices[event.id]} + ' €'">Current Price</td>
                 <td>
                     <th:block sec:authorize="hasRole('ADMIN')">
                         <a th:href="@{/events/delete/{id}(id=${event.getId()})}" class="btn btn-sm btn-danger" role="button">
@@ -191,6 +210,9 @@
 
         <h2>User Name: </h2>
         <input type="text" name="username" placeholder="Enter your name"><br/>
+
+        <h2>Address: </h2>
+        <input type="text" name="address" placeholder="Enter your address" required><br/>
 
         <input type="submit" value="Submit">
     </form>

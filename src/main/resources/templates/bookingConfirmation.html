@@ -100,8 +100,12 @@
    </tr>
    <tr>
     <th>IP Address</th>
-    <td th:text="${ip_address}">IP Address</td>
+    <td th:text="${session.attendeeAddress}">IP Address</td>
    </tr>
+    <tr>
+     <th>Total Price</th>
+     <td th:text="${session.totalPrice}">Total Price</td>
+    </tr>
    </table>
    <a href="/events" class="btn">Back to Events</a>
   </section>
