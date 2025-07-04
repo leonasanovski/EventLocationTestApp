@@ -3,4 +3,4 @@ We need to test the following concepts:
 - Graph Coverage
 - Logic Coverage
 - Add and test with Mock
-- Several JUnite tests with the annotations on top of them
+- Several JUnit tests and Parametarized JUnit tests

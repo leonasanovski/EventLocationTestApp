@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Table(name = "event")
 public class Event {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String description;
@@ -27,6 +27,7 @@ public class Event {
     private Integer maxTickets;
     @ManyToOne
     private Location location;
+
     public Event(String name, String description, double popularityScore, Location location,
                  LocalDateTime startTime, LocalDateTime endTime, double basePrice, Integer maxTickets) {
         this.name = name;
@@ -38,6 +39,7 @@ public class Event {
         this.basePrice = basePrice;
         this.maxTickets = maxTickets;
     }
+
     //LEON
     //This method is chosen for ISP (Base Coverage) testing
     public double calculatePrice(Integer numTickets, Integer ticketsBookedSoFar, LocalDateTime bookingTime) {
@@ -56,10 +58,10 @@ public class Event {
         if (!bookingTime.isBefore(this.startTime)) {
             throw new InvalidDateForBookingException("Booking must be made before the event starts.");
         }
-        if(maxTickets < 0 ) {
+        if (maxTickets < 0) {
             throw new InvalidRangeSetException("Max tickets must be a positive integer.");
         }
-        if(maxTickets == 0){
+        if (maxTickets == 0) {
             throw new ArithmeticException("Dividing by zero!");
         }
         double price = basePrice;
@@ -72,4 +74,6 @@ public class Event {
         }
         return price * numTickets;
     }
+
+
 }

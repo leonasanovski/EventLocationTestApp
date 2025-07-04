@@ -18,5 +18,6 @@ public interface EventService {
     Event findByName(String name);
     Map<Long, Integer> getRemainingTicketsForAllEvents();
     Map<Long, Double> getDynamicPricesForAllEvents();
+    boolean isEventForAdultsOnly(Event event);
 
 }
