@@ -126,8 +126,7 @@ public class EventServiceImplementation implements EventService {
                 .findAll()
                 .stream()
                 .mapToDouble(Event::getMaxTickets)
-                .average()
-                .getAsDouble();
+                .average().getAsDouble();
 
         boolean isBigEvent = event.getMaxTickets() > average_max_capacity;
         boolean isBadRated = event.getPopularityScore() < 3;
