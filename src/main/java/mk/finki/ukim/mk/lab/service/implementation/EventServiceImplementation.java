@@ -37,7 +37,7 @@ public class EventServiceImplementation implements EventService {
         if (text.isEmpty()) throw new IllegalArgumentException("I cant search without any text!");
         return eventRepository.findByDescription(text);
     }
-
+    //GORJAN
     @Override
     public void save_event(Long id, String name, String description, double popularityScore, Long locationID, LocalDateTime from, LocalDateTime to,double basePrice, int maxTickets) {
         Location location = locationRepository.findById(locationID)
@@ -68,6 +68,7 @@ public class EventServiceImplementation implements EventService {
     public Optional<Event> findEvent(Long id) {
         return eventRepository.findById(id);
     }
+    //LEON
     @Override
     public boolean isConflict(Event newEvent) {
         List<Event> existingEvents = eventRepository.findByLocationId(newEvent.getLocation().getId());
@@ -89,7 +90,7 @@ public class EventServiceImplementation implements EventService {
         return eventRepository.findByName(name)
                 .orElseThrow(() -> new RuntimeException("Event with name " + name + " not found"));
     }
-
+    //GORJAN
     @Override
     public Map<Long, Integer> getRemainingTicketsForAllEvents() {
         List<Event> events = eventRepository.findAll();
@@ -103,7 +104,7 @@ public class EventServiceImplementation implements EventService {
 
         return remainingTicketsMap;
     }
-
+    //LEON
     @Override
     public Map<Long, Double> getDynamicPricesForAllEvents() {
         List<Event> events = eventRepository.findAll();

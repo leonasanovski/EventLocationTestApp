@@ -14,7 +14,6 @@ public class BookingCart {
     private String attendeeName;
     private String address;
     private List<EventBooking> items = new ArrayList<>();
-
     public double getTotalPrice() {
         return items.stream().mapToDouble(EventBooking::getTotalPrice).sum();
     }

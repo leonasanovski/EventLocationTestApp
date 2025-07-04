@@ -21,6 +21,8 @@ public class BookingCartServiceImplementation implements BookingCartService {
 
     }
 
+    //UNIT TESTS SO @CsvSource I @MethodSource
+    //GORJAN
     @Override
     public BookingCart addToCart(String selectedEvent, int numTickets, String username, String address, HttpSession session) {
         Event event = eventService.findByName(selectedEvent);

@@ -1,7 +1,7 @@
 package mk.finki.ukim.mk.lab.bootstrap;
 
 public class LoyaltyUtils {
-
+    //GORJAN
     public static double getLoyaltyDiscount(int bookingCount) {
         if (bookingCount >= 50) return 0.5;
         else if (bookingCount >= 30) return 0.4;
@@ -10,7 +10,7 @@ public class LoyaltyUtils {
         else if (bookingCount >= 5) return 0.1;
         else return 0.0;
     }
-
+    //LEON
     public static String getLoyaltyLevel(int bookingCount) {
         if (bookingCount >= 50) return "GOLD";
         else if (bookingCount >= 30) return "GOLD";

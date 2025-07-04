@@ -10,17 +10,17 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 @Service
-public class EventBookingServiceImplemetation implements EventBookingService {
+public class EventBookingServiceImplementation implements EventBookingService {
 
     private final EventRepository eventRepository;
     private final EventBookingRepository eventBookingRepository;
 
-    public EventBookingServiceImplemetation(EventRepository eventRepository, EventBookingRepository eventBookingRepository) {
+    public EventBookingServiceImplementation(EventRepository eventRepository, EventBookingRepository eventBookingRepository) {
         this.eventRepository = eventRepository;
         this.eventBookingRepository = eventBookingRepository;
     }
 
-
+    //LEON
     @Override
     public EventBooking bookEvent(String attendeeName, String attendeeAddress,
                                   Long eventId, Long numTickets) {
