@@ -31,4 +31,14 @@ public class Location {
         this.capacity = capacity;
         this.description = description;
     }
+    public boolean isValidLocation() {
+        try {
+            return !name.isBlank()
+                    && !address.isBlank()
+                    && capacity.matches("\\d+")
+                    && description.length() >= 10;
+        } catch (NullPointerException e) {
+            return false;
+        }
+    }
 }

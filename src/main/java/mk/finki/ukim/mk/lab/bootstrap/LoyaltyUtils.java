@@ -2,7 +2,14 @@ package mk.finki.ukim.mk.lab.bootstrap;
 
 public class LoyaltyUtils {
     //GORJAN
-    public static double getLoyaltyDiscount(int bookingCount) {
+    public static double getLoyaltyDiscount(Integer bookingCount) {
+        if (bookingCount == null) {
+            throw new IllegalArgumentException("Booking count cannot be null.");
+        }
+        if (bookingCount < 0) {
+            throw new IllegalArgumentException("Booking count cannot be negative.");
+        }
+
         if (bookingCount >= 50) return 0.5;
         else if (bookingCount >= 30) return 0.4;
         else if (bookingCount >= 20) return 0.3;
