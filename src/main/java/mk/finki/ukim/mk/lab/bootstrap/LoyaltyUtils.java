@@ -10,11 +10,18 @@ public class LoyaltyUtils {
         else if (bookingCount >= 5) return 0.1;
         else return 0.0;
     }
+
     //LEON
-    public static String getLoyaltyLevel(int bookingCount) {
-        if (bookingCount >= 50) return "GOLD";
-        else if (bookingCount >= 30) return "GOLD";
-        else if (bookingCount >= 10) return "SILVER";
+    public static String getLoyaltyLevel(Integer bookingCount) {
+        if (bookingCount == null || bookingCount < 0) {
+            throw new IllegalArgumentException("Invalid booking count value!");
+        }
+        if (bookingCount >= 50)
+            return "GOLD";
+        else if (bookingCount >= 30)
+            return "SILVER";
+        else if (bookingCount >= 10)
+            return "BRONZE";
         else return "REGULAR";
     }
 }

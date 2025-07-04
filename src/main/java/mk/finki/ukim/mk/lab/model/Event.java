@@ -41,6 +41,7 @@ public class Event {
     //LEON
     //This method is chosen for ISP (Base Coverage) testing
     public double calculatePrice(Integer numTickets, Integer ticketsBookedSoFar, LocalDateTime bookingTime) {
+        if (numTickets == null || numTickets <= 0 || ticketsBookedSoFar == null || ticketsBookedSoFar < 0)
         if (numTickets == null || numTickets <= 0) {
             throw new IllegalArgumentException("Number of tickets must be a positive integer.");
         }
@@ -72,4 +73,8 @@ public class Event {
         }
         return price * numTickets;
     }
+
+
+
+
 }

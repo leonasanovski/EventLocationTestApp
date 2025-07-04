@@ -119,4 +119,19 @@ public class EventServiceImplementation implements EventService {
 
         return priceMap;
     }
+    //LEON
+    @Override
+    public boolean isEventForAdultsOnly(Event event) {
+        double average_max_capacity = eventRepository
+                .findAll()
+                .stream()
+                .mapToDouble(Event::getMaxTickets)
+                .average()
+                .getAsDouble();
+        boolean isBigEvent = event.getMaxTickets() > average_max_capacity;
+        boolean isBadRated = event.getPopularityScore() < 3;
+        boolean isAtNight = event.getStartTime().getHour() >= 22;
+        boolean isLocationOverused = event.getLocation().getEvents().size() > 2;
+        return (isBigEvent || isLocationOverused) && !isBadRated && isAtNight;
+    }
 }
