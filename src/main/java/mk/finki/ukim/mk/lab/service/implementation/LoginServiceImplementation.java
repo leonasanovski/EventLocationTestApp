@@ -38,6 +38,7 @@ public class LoginServiceImplementation implements LoginService {
         session.setAttribute("discount", discount);
     }
     //MOCK FOR THIS ONE
+    //GORJAN
     @Override
     public int simulateBookings(String username) {
         int num = new Random().nextInt(60); // 0–59 bookings

@@ -3,15 +3,17 @@ package mk.finki.ukim.mk.lab.calculatePriceFunction.comprehensive_unit_testing;
 import mk.finki.ukim.mk.lab.model.Event;
 import mk.finki.ukim.mk.lab.model.exceptions.InvalidDateForBookingException;
 import mk.finki.ukim.mk.lab.model.exceptions.InvalidRangeSetException;
+import mk.finki.ukim.mk.lab.repository.jpa.LocationRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
+import org.mockito.cglib.core.Local;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.stream.Stream;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class EventCalculatePriceTest {
@@ -33,6 +35,7 @@ class EventCalculatePriceTest {
         event.setBasePrice(100.0);
         event.setMaxTickets(100);
     }
+
 
     @Test
     @DisplayName("Low demand with early booking valid test")

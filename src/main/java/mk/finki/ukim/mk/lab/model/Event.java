@@ -39,6 +39,13 @@ public class Event {
         this.basePrice = basePrice;
         this.maxTickets = maxTickets;
     }
+    //constructor for the test for graph coverage
+    public Event(double basePrice, int maxTickets, LocalDateTime start, LocalDateTime end){
+        this.basePrice = basePrice;
+        this.maxTickets = maxTickets;
+        this.startTime = start;
+        this.endTime = end;
+    }
 
     public Event(String name, int i, LocalDateTime now) {
         this.name = name;

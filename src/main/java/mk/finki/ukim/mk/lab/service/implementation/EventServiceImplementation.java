@@ -72,13 +72,11 @@ public class EventServiceImplementation implements EventService {
     @Override
     public boolean isConflict(Event newEvent) {
         List<Event> existingEvents = eventRepository.findByLocationId(newEvent.getLocation().getId());
-
         for (Event existing : existingEvents) {
             boolean overlaps = !newEvent.getEndTime().isBefore(existing.getStartTime()) &&
                     !newEvent.getStartTime().isAfter(existing.getEndTime());
             if (overlaps) return true;
         }
-
         return false;
     }
     @Override
@@ -164,7 +162,6 @@ public class EventServiceImplementation implements EventService {
 
     // Step 4: Final return
     return group1 && group2 && group3;
-}
-
+    }
      */
 }

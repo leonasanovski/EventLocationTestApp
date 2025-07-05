@@ -22,8 +22,20 @@ public class EventBookingServiceImplementation implements EventBookingService {
 
     //LEON
     @Override
-    public EventBooking bookEvent(String attendeeName, String attendeeAddress,
-                                  Long eventId, Long numTickets) {
+    public EventBooking bookEvent(String attendeeName, String attendeeAddress, Long eventId, Long numTickets) {
+        if (attendeeName == null || attendeeName.isBlank()) {
+            throw new IllegalArgumentException("Attendee name cannot be null or empty.");
+        }
+        if (attendeeAddress == null || attendeeAddress.isBlank()) {
+            throw new IllegalArgumentException("Attendee address cannot be null or empty.");
+        }
+        if (eventId == null || eventId > Long.MAX_VALUE) {
+            throw new IllegalArgumentException("Event ID cannot be null.");
+        }
+        if (numTickets == null || numTickets <= 0) {
+            throw new IllegalArgumentException("Number of tickets must be a positive number.");
+        }
+
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new RuntimeException("Event not found"));
 
@@ -40,3 +52,4 @@ public class EventBookingServiceImplementation implements EventBookingService {
     }
 
 }
+
