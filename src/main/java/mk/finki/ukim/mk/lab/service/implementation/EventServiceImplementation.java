@@ -146,14 +146,20 @@ public class EventServiceImplementation implements EventService {
     public Map<Long, Double> getDynamicPricesForAllEvents() {
         List<Event> events = eventRepository.findAll();
         Map<Long, Double> priceMap = new HashMap<>();
-
-        for (Event event : events) {
+        for (int i = 0; i < events.size(); i++) {
+            Event event = events.get(i);
+            if (event == null || event.getId() == null) {
+                continue; // Skip null or malformed events
+            }
             int booked = eventBookingRepository.countTicketsByEventId(event.getId());
-            // Simulate a 1-ticket booking right now for preview
-            double currentPrice = event.calculatePrice(1, booked, LocalDateTime.now());
-            priceMap.put(event.getId(), currentPrice);
+            double price;
+            if (booked >= event.getMaxTickets()) {
+                price = -1.0; // Sold out
+            } else {
+                price = event.calculatePrice(1, booked, LocalDateTime.now());
+            }
+            priceMap.put(event.getId(), price);
         }
-
         return priceMap;
     }
     //LEON

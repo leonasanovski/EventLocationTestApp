@@ -98,7 +98,6 @@ class IsEventForAdultsOnlyLogicCoverageCACCTests {
         event.setPopularityScore(4.0); // not bad
         event.setStartTime(LocalDateTime.of(2025, 1, 1, 22, 30)); // night
         location.setEvents(List.of(new Event(), new Event(), new Event())); // overused
-
         assertTrue(eventService.isEventForAdultsOnly(event));
     }
 
