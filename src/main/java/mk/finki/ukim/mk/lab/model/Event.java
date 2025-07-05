@@ -88,5 +88,4 @@ public class Event {
         return price * numTickets;
     }
 
-
 }

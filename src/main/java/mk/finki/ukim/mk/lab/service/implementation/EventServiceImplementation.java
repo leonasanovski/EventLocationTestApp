@@ -132,36 +132,4 @@ public class EventServiceImplementation implements EventService {
         boolean isLocationOverused = event.getLocation().getEvents().size() > 2;
         return (isBigEvent || isLocationOverused) && !isBadRated && isAtNight;
     }
-
-    /*
-    decomposed for graph coverage ready to test
-
-    @Override
-    public boolean isEventForAdultsOnly(Event event) {
-    List<Event> allEvents = eventRepository.findAll();
-
-    // Step 1: Calculate average max capacity manually
-    double total = 0;
-    int count = 0;
-    for (Event e : allEvents) {
-        total += e.getMaxTickets();
-        count++;
-    }
-    double avgCapacity = (count > 0) ? total / count : 0;
-
-    // Step 2: Evaluate Boolean flags
-    boolean isBigEvent = event.getMaxTickets() > avgCapacity;
-    boolean isLocationOverused = event.getLocation().getEvents().size() > 2;
-    boolean isBadRated = event.getPopularityScore() < 3;
-    boolean isAtNight = event.getStartTime().getHour() >= 22;
-
-    // Step 3: Compose logical groups
-    boolean group1 = isBigEvent || isLocationOverused;
-    boolean group2 = !isBadRated;
-    boolean group3 = isAtNight;
-
-    // Step 4: Final return
-    return group1 && group2 && group3;
-    }
-     */
 }

@@ -29,7 +29,7 @@ public class EventBookingServiceImplementation implements EventBookingService {
         if (attendeeAddress == null || attendeeAddress.isBlank()) {
             throw new IllegalArgumentException("Attendee address cannot be null or empty.");
         }
-        if (eventId == null || eventId > Long.MAX_VALUE) {
+        if (eventId == null) {
             throw new IllegalArgumentException("Event ID cannot be null.");
         }
         if (numTickets == null || numTickets <= 0) {
