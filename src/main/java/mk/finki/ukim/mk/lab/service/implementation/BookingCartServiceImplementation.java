@@ -24,14 +24,38 @@ public class BookingCartServiceImplementation implements BookingCartService {
     //UNIT TESTS SO @CsvSource I @MethodSource
     //GORJAN
     @Override
-    public BookingCart addToCart(String selectedEvent, int numTickets, String username, String address, HttpSession session) {
+    public BookingCart addToCart(String selectedEvent, Integer numTickets, String username, String address, HttpSession session) {
+        if (selectedEvent == null || selectedEvent.isBlank()) {
+            throw new IllegalArgumentException("Selected event must not be null or blank.");
+        }
+        if (username == null || username.isBlank()) {
+            throw new IllegalArgumentException("Username must not be null or blank.");
+        }
+        if (address == null || address.isBlank()) {
+            throw new IllegalArgumentException("Address must not be null or blank.");
+        }
+        if (numTickets== null ||numTickets <= 0) {
+            throw new IllegalArgumentException("Number of tickets must be greater than 0.");
+        }
+        if (session == null) {
+            throw new IllegalArgumentException("Session must not be null.");
+        }
+
         Event event = eventService.findByName(selectedEvent);
+        if (event == null) {
+            throw new IllegalArgumentException("Event not found: " + selectedEvent);
+        }
+
         int alreadyBooked = eventService.countTicketsBookedForEvent(event.getId());
 
-        double loyaltyDiscount = (double) session.getAttribute("discount");
-        double basePrice = event.calculatePrice(numTickets, alreadyBooked, LocalDateTime.now());
+        Object discountAttr = session.getAttribute("discount");
+        if (!(discountAttr instanceof Double)) {
+            throw new IllegalArgumentException("Discount in session must be a valid Double.");
+        }
 
-        double totalPrice = basePrice * (1 - loyaltyDiscount/100);
+        double loyaltyDiscount = (Double) discountAttr;
+        double basePrice = event.calculatePrice(numTickets, alreadyBooked, LocalDateTime.now());
+        double totalPrice = basePrice * (1 - loyaltyDiscount / 100);
 
         BookingCart cart = (BookingCart) session.getAttribute("cart");
         if (cart == null) {

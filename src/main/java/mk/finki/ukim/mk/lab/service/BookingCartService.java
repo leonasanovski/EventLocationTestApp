@@ -4,5 +4,5 @@ import jakarta.servlet.http.HttpSession;
 import mk.finki.ukim.mk.lab.model.BookingCart;
 
 public interface BookingCartService {
-    BookingCart addToCart(String selectedEvent, int numTickets, String username, String address, HttpSession session);
+    BookingCart addToCart(String selectedEvent, Integer numTickets, String username, String address, HttpSession session);
 }

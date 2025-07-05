@@ -40,6 +40,12 @@ public class Event {
         this.maxTickets = maxTickets;
     }
 
+    public Event(String name, int i, LocalDateTime now) {
+        this.name = name;
+        this.startTime = now;
+
+    }
+
     //LEON
     //This method is chosen for ISP (Base Coverage) testing
     public double calculatePrice(Integer numTickets, Integer ticketsBookedSoFar, LocalDateTime bookingTime) {
