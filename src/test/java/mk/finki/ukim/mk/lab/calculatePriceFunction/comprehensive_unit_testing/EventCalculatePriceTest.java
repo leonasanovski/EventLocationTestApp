@@ -1,4 +1,4 @@
-package mk.finki.ukim.mk.lab.calculatePriceFunction.basic_unit_parametarized_tests;
+package mk.finki.ukim.mk.lab.calculatePriceFunction.comprehensive_unit_testing;
 
 import mk.finki.ukim.mk.lab.model.Event;
 import mk.finki.ukim.mk.lab.model.exceptions.InvalidDateForBookingException;
@@ -257,7 +257,6 @@ class EventCalculatePriceTest {
     }
 
 
-
     @Test
     @DisplayName("Boundary test - just under 30 days early booking")
     void testJustUnderBoundaryEarlyBooking() {
@@ -286,22 +285,4 @@ class EventCalculatePriceTest {
         }
     }
 
-    static class InvalidDateTestDataDTO {
-        final String type;
-        final String expectedMessage;
-
-        InvalidDateTestDataDTO(String type, String expectedMessage) {
-            this.type = type;
-            this.expectedMessage = expectedMessage;
-        }
-
-        LocalDateTime getBookingTime(LocalDateTime startTime, LocalDateTime endTime) {
-            return switch (type) {
-                case "AFTER_END" -> endTime.plusHours(1);
-                case "DURING_EVENT" -> startTime.plusHours(1);
-                case "AT_START" -> startTime;
-                default -> throw new IllegalArgumentException("Unknown type: " + type);
-            };
-        }
-    }
 }
