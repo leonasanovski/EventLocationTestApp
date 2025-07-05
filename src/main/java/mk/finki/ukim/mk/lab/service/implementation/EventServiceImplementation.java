@@ -39,21 +39,60 @@ public class EventServiceImplementation implements EventService {
     }
     //GORJAN
     @Override
-    public void save_event(Long id, String name, String description, double popularityScore, Long locationID, LocalDateTime from, LocalDateTime to,double basePrice, int maxTickets) {
+    public void save_event(Long id, String name, String description, double popularityScore,
+                           Long locationID, LocalDateTime from, LocalDateTime to,
+                           double basePrice, int maxTickets) {
+
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Event name must not be null or blank.");
+        }
+
+        if (description == null || description.isBlank()) {
+            throw new IllegalArgumentException("Event description must not be null or blank.");
+        }
+
+        if (popularityScore < 0 || popularityScore > 10) {
+            throw new IllegalArgumentException("Popularity score must be between 0 and 10.");
+        }
+
+        if (locationID == null) {
+            throw new IllegalArgumentException("Location ID must not be null.");
+        }
+
+        if (from == null || to == null) {
+            throw new IllegalArgumentException("Start and end date must not be null.");
+        }
+
+        if (!from.isBefore(to)) {
+            throw new IllegalArgumentException("Start time must be before end time.");
+        }
+
+        if (basePrice < 0) {
+            throw new IllegalArgumentException("Base price must not be negative.");
+        }
+
+        if (maxTickets <= 0) {
+            throw new IllegalArgumentException("Maximum tickets must be greater than 0.");
+        }
+
         Location location = locationRepository.findById(locationID)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid location ID"));
+
         Event event;
         if (id != null && eventRepository.findById(id).isPresent()) {
             event = eventRepository.findById(id).get();
-            // Update existing event
             event.setName(name);
             event.setDescription(description);
             event.setPopularityScore(popularityScore);
             event.setLocation(location);
+            event.setStartTime(from);
+            event.setEndTime(to);
+            event.setBasePrice(basePrice);
+            event.setMaxTickets(maxTickets);
         } else {
-            // Create a new event
-            event = new Event(name, description, popularityScore, location,from,to,basePrice, maxTickets);
+            event = new Event(name, description, popularityScore, location, from, to, basePrice, maxTickets);
         }
+
         if (!isConflict(event)) {
             this.eventRepository.save(event);
         }
