@@ -1,4 +1,4 @@
-#EventLocationTestApp
+# EventLocationTestApp
 
 This is a simple **Spring Boot web application** for managing events and their locations. It was developed as a collaborative project to explore and apply testing strategies using the **Spring MVC Test framework**.
 
