@@ -89,7 +89,6 @@ class SimulateBookingsTestMock {
     @DisplayName("eventRepo returns null → NullPointerException")
     void testRepoReturnsNullThrows() {
         when(eventRepo.findAll()).thenReturn(null);
-
         assertThrows(NullPointerException.class, () ->
                 service.simulateBookings("failUser"));
     }
