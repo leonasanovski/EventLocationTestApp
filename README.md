@@ -9,3 +9,7 @@ This application focuses on testing web-layer behavior using:
 - Unit tests for core service functionality
 - Testing the functions and their functionality with different methods we have learned during the cours QA Testing
 
+## Contributors for the Testing
+
+- [Leon Asanovski](https://github.com/leonasanovski)
+- [Gorjan Bogoevski](https://github.com/Gorjan-Bogoevski)
