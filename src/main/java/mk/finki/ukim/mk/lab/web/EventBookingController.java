@@ -28,29 +28,29 @@ public class EventBookingController {
         this.bookingCartService = bookingCartService;
     }
 
-    @PostMapping("/events/book_event")
-    public String bookEvent(@RequestParam String username,
-                            @RequestParam String address,
-                            @RequestParam int numTickets,
-                            @RequestParam String selectedEvent,
-                            HttpServletRequest request) {
-
-        Event event = eventService.findByName(selectedEvent);
-        EventBooking booking = eventBookingService.bookEvent(
-                username,
-                address,
-                event.getId(),
-                (long) numTickets
-        );
-
-        request.getSession().setAttribute("username", booking.getAttendeeName());
-        request.getSession().setAttribute("attendeeAddress", booking.getAttendeeAddress());
-        request.getSession().setAttribute("numTickets", booking.getNumberOfTickets());
-        request.getSession().setAttribute("selectedEvent", booking.getEvent().getName());
-        request.getSession().setAttribute("totalPrice", booking.getTotalPrice());
-
-        return "bookingConfirmation";
-    }
+//    @PostMapping("/events/book_event")
+//    public String bookEvent(@RequestParam String username,
+//                            @RequestParam String address,
+//                            @RequestParam int numTickets,
+//                            @RequestParam String selectedEvent,
+//                            HttpServletRequest request) {
+//
+//        Event event = eventService.findByName(selectedEvent);
+//        EventBooking booking = eventBookingService.bookEvent(
+//                username,
+//                address,
+//                event.getId(),
+//                (long) numTickets
+//        );
+//
+//        request.getSession().setAttribute("username", booking.getAttendeeName());
+//        request.getSession().setAttribute("attendeeAddress", booking.getAttendeeAddress());
+//        request.getSession().setAttribute("numTickets", booking.getNumberOfTickets());
+//        request.getSession().setAttribute("selectedEvent", booking.getEvent().getName());
+//        request.getSession().setAttribute("totalPrice", booking.getTotalPrice());
+//
+//        return "bookingConfirmation";
+//    }
 
     @PostMapping("/cart/add")
     public String addToCart(@RequestParam String selectedEvent,
@@ -91,4 +91,5 @@ public class EventBookingController {
         }
         return "bookingConfirmation";
     }
+
 }

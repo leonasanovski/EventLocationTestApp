@@ -17,6 +17,7 @@ public class LocationController {
     public LocationController(LocationService locationService) {
         this.locationService = locationService;
     }
+
     @GetMapping()
     public String getEventsPage(@RequestParam(required = false) String error, Model model){
         List<Location> location_list = this.locationService.findAll();
@@ -32,6 +33,7 @@ public class LocationController {
     public String addNewEvent(Model model){
         return "add-location-form";
     }
+
     @PostMapping("/add")
     public String saveEvent(@RequestParam String name,
                             @RequestParam String address,
